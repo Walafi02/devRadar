@@ -13,10 +13,13 @@ module.exports = {
 
     const { github_username, techs, longitude, latitude } = req.body;
 
+    console.log(req.body)
+
     let dev = await Dev.findOne({github_username})
     if(!dev) {
 
       const { data } = await axios.get(`https://api.github.com/users/${github_username}`);
+
       const { name = login, avatar_url, bio } = data;
 
       const techsArray = parseStringToArray(techs);
