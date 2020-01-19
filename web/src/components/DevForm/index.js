@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import './style.css';
 
 export default function DevForm({onSubmit}) {
+  const [loading, setLoading] = useState(false);
   const [github_username, setUsernameGithub] = useState('');
   const [techs, setTechs] = useState('');
 
@@ -28,16 +29,23 @@ export default function DevForm({onSubmit}) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
-    await onSubmit({
-      github_username,
-      techs,
-      latitude,
-      longitude
-    });
+    try {
+      await onSubmit({
+        github_username,
+        techs,
+        latitude,
+        longitude
+      });
 
-    setUsernameGithub('');
-    setTechs('');
+      setUsernameGithub('');
+      setTechs('');
+    } catch (error) {
+      alert("Error ao buscar dev!")
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -88,7 +96,7 @@ export default function DevForm({onSubmit}) {
           />
         </div>
       </div>
-      <button type="submit">Salvar</button>
+      <button type="submit" disabled={loading}> {loading ? 'Carrengando' : 'Salvar' }</button>
     </form>
   );
 }
