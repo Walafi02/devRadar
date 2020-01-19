@@ -15,7 +15,7 @@ export default function DevItem({dev}) {
       {dev.bio && (
         <p>{dev.bio}</p>
       )}
-      <a href={`https://github.com/${dev.username_github}`}>Acessar Perfil</a>
+      <a href={`https://github.com/${dev.github_username}`}>Acessar Perfil</a>
     </li>
   );
 }
